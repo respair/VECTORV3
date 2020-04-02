@@ -51,7 +51,7 @@ Error create_test_complex() {                                   //test for creat
 
     int quantity_v = 6;
     double* a;                                                  //array of user values
-    double arr[6] = { 0.5,1,2,1,0,3.5 };                        // user values ​​for x,y,z,xi,yi,zi
+    double arr[] = { 0.5,1,2,1,0,3.5 };                        // user values ​​for x,y,z,xi,yi,zi
     a = arr;
     int i = 0;                                                  //count
 
@@ -82,7 +82,7 @@ Error create_test_real() {                             //test for creating a val
     int i = 0;
     vector2* vec2;
     vector2* vec2_user;
-    double arr[3] = { 0.5,1,2 };                      //user values ​​for х,y,z
+    double arr[] = { 0.5,1,2 };                      //user values ​​for х,y,z
     a2 = arr;
 
     vec2 = (vector2*)calloc(quantity_v, sizeof(double));
@@ -111,7 +111,7 @@ Error sum_test_complex() {                             //sum of two vectors
     int quantity_v = 12;
     double* a;
     int i = 0;
-    double arr[6] = { 3,4,6,4,4,9 };                     
+    double arr[] = { 3,4,6,4,4,9 };                     
     a = arr;
 
     rez_user = (vectorr*)calloc(quantity_v / 2, sizeof(double));
@@ -144,7 +144,7 @@ Error sum_test_real() {
     double* a;
     int quantity_v = 6;
     int i = 0;
-    double arr[3] = { 3,4,6 };
+    double arr[] = { 3,4,6 };
     a = arr;
 
     rez_user = (vector2*)calloc(quantity_v / 2, sizeof(double));
@@ -176,7 +176,7 @@ Error scalar_pr_test_complex() {
     int quantity_v = 12;
     double* a;
     int i = 0;
-    double arr[2] = { -10,33 };                                          //scalar product user result
+    double arr[] = { -10,33 };                                          //scalar product user result
     a = arr;
 
     rezult = (rez*)calloc(quantity_v / 2, sizeof(double));
@@ -203,7 +203,7 @@ Error scalar_pr_test_real() {
     int quantity_v = 6;
     double* a;
     int i = 0;
-    double arr[1] = { 12.25 };                                          //scalar product user result
+    double arr[] = { 12.25 };                                          //scalar product user result
     a = arr;
 
     rezult = (double*)calloc(quantity_v / 2, sizeof(double));
@@ -231,7 +231,7 @@ Error vector_pr_test_complex() {                                          //vect
     double* a;
     vectorr* rez_pr;                                                      //just the result
     int i = 0;
-    double arr[6] = { 12,-2,-5,-13,8,2 };                                 //user coordinate values
+    double arr[] = { 12,-2,-5,-13,8,2 };                                 //user coordinate values
     a = arr;
 
     vec1 = (vectorr*)calloc(quantity_v, sizeof(double));
@@ -263,7 +263,7 @@ Error vector_pr_test_real() {
     double* a;
     vector2* rez_pr;
     int i = 0;
-    double arr[3] = { -2,3,-1 };                               
+    double arr[] = { -2,3,-1 };                               
     a = arr;
     
 
