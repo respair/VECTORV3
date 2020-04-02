@@ -46,25 +46,24 @@ int comparison_real(vector2* vect1, vector2* vect2, int m) {          //comparis
 
 
 
-Error create_test_complex() {                                         //test for creating a complex vector by a program 
-                                                                      //(function in vector.c)
+Error create_test_complex() {                                   //test for creating a complex vector by a program 
+                                                                //(function in vector.c)
 
     int quantity_v = 6;
     double* a;                                                  //array of user values
-
-    int i = 0;                                                         //count
+    double arr[6] = { 0.5,1,2,1,0,3.5 };                        // user values ​​for x,y,z,xi,yi,zi
+    a = arr;
+    int i = 0;                                                  //count
 
     vectorr* vec1;                                              //vector for program
     vectorr* vec_user;                                          //дfor user
 
     vec1 = (vectorr*)calloc(quantity_v, sizeof(double));
     vec_user = (vectorr*)calloc(quantity_v, sizeof(double));
-    a = (double*)calloc(quantity_v, sizeof(double));
-
-    a[0] = 0.5; a[1] = 1; a[2] = 2; a[3] = 1; a[4] = 0; a[5] = 3.5; // user values ​​for x,y,z,xi,yi,zi
+    
     vec1[i] = create(vec1, i, i + 1);
 
-    user(vec_user, a, i);                                           //user vector creation
+    user(vec_user, a, i);                                       //user vector creation
 
     Error result = OK;
     if (comparison(vec1, vec_user, i) != 1)
@@ -72,24 +71,23 @@ Error create_test_complex() {                                         //test for
 
     free(vec1);
     free(vec_user);
-    free(a);
     return result;
 }
 
 
-Error create_test_real() {                              //test for creating a valid vector by a program (function in vector.c)
+Error create_test_real() {                             //test for creating a valid vector by a program (function in vector.c)
 
     int quantity_v = 3;
     double* a2;
     int i = 0;
     vector2* vec2;
     vector2* vec2_user;
+    double arr[3] = { 0.5,1,2 };                      //user values ​​for х,y,z
+    a2 = arr;
 
     vec2 = (vector2*)calloc(quantity_v, sizeof(double));
     vec2_user = (vector2*)calloc(quantity_v, sizeof(double));
-    a2 = (double*)calloc(quantity_v, sizeof(double));
 
-    a2[0] = 0.5; a2[1] = 1; a2[2] = 2;                 //user values ​​for х,y,z
 
     vec2[i] = create_real(vec2, i, i + 1);
 
@@ -101,7 +99,6 @@ Error create_test_real() {                              //test for creating a va
 
     free(vec2);
     free(vec2_user);
-    free(a2);
     return result;
 }
 
@@ -114,16 +111,16 @@ Error sum_test_complex() {                             //sum of two vectors
     int quantity_v = 12;
     double* a;
     int i = 0;
+    double arr[6] = { 3,4,6,4,4,9 };                     
+    a = arr;
 
     rez_user = (vectorr*)calloc(quantity_v / 2, sizeof(double));
     vec1 = (vectorr*)calloc(quantity_v, sizeof(double));
     rez_sum = (vectorr*)calloc(quantity_v / 2, sizeof(double));
-    a = (double*)calloc(quantity_v / 2, sizeof(double));
-
-    a[0] = 3; a[1] = 4; a[2] = 6; a[3] = 4; a[4] = 4; a[5] = 9;
+    
     user(rez_user, a, i);
 
-    vec1[i] = create(vec1, i, i + 1);                //create
+    vec1[i] = create(vec1, i, i + 1);                   //create
     vec1[i + 1] = create(vec1, i + 1, i + 2);
 
     sum_c(vec1, rez_sum, i);                            //add two vectors(function in vector.c)
@@ -142,18 +139,18 @@ Error sum_test_real() {
 
 
     vector2* vec1;
-    vector2* rez_sum;                             //vector storing the result of addition
+    vector2* rez_sum;                                  //vector storing the result of addition
     vector2* rez_user;
     double* a;
     int quantity_v = 6;
     int i = 0;
+    double arr[3] = { 3,4,6 };
+    a = arr;
 
     rez_user = (vector2*)calloc(quantity_v / 2, sizeof(double));
     vec1 = (vector2*)calloc(quantity_v, sizeof(double));
     rez_sum = (vector2*)calloc(quantity_v / 2, sizeof(double));
-    a = (double*)calloc(quantity_v / 2, sizeof(double));
-
-    a[0] = 3; a[1] = 4; a[2] = 6;
+ 
     user_real(rez_user, a, i);
 
     vec1[i] = create_real(vec1, i, i + 1);
@@ -175,27 +172,26 @@ Error sum_test_real() {
 Error scalar_pr_test_complex() {
 
     vectorr* vec1;
-    rez* rezult;                                                    //multiplication result
+    rez* rezult;                                                         //multiplication result
     int quantity_v = 12;
     double* a;
     int i = 0;
+    double arr[2] = { -10,33 };                                          //scalar product user result
+    a = arr;
 
     rezult = (rez*)calloc(quantity_v / 2, sizeof(double));
     vec1 = (vectorr*)calloc(quantity_v, sizeof(double));
-    a = (double*)calloc(quantity_v / 6, sizeof(double));
-
-    a[0] = -10; a[1] = 33;                                               //scalar product user result
+                                                 
 
     vec1[i] = create(vec1, i, i + 1);
     vec1[i + 1] = create(vec1, i + 1, i + 2);
-    rezult[i] = scalar_pr_c(vec1, rezult, i);                              //vector.c
+    rezult[i] = scalar_pr_c(vec1, rezult, i);                            //vector.c
 
     Error result = OK;
     if (rezult[i].rez_scal != a[0] || rezult[i].rez_scalcomplex != a[1]) // compare directly
         result = ERROR;
 
     free(vec1);
-    free(a);
     free(rezult);
     return result;
 }
@@ -207,12 +203,11 @@ Error scalar_pr_test_real() {
     int quantity_v = 6;
     double* a;
     int i = 0;
+    double arr[1] = { 12.25 };                                          //scalar product user result
+    a = arr;
 
     rezult = (double*)calloc(quantity_v / 2, sizeof(double));
     vec1 = (vector2*)calloc(quantity_v, sizeof(double));
-    a = (double*)calloc(quantity_v / 3, sizeof(double));
-
-    a[0] = 12.25;
 
     vec1[i] = create_real(vec1, i, i + 1);
     vec1[i + 1] = create_real(vec1, i + 1, i + 2);
@@ -224,32 +219,30 @@ Error scalar_pr_test_real() {
 
     free(vec1);
     free(rezult);
-    free(a);
     return result;
 }
 
-Error vector_pr_test_complex() {                                    //vector product of complex vectors
+Error vector_pr_test_complex() {                                          //vector product of complex vectors
 
 
     vectorr* vec1;
-    vectorr* rez_user;                                         //user result
+    vectorr* rez_user;                                                    //user result
     int quantity_v = 12;
     double* a;
-    vectorr* rez_pr;                                          //just the result
+    vectorr* rez_pr;                                                      //just the result
     int i = 0;
+    double arr[6] = { 12,-2,-5,-13,8,2 };                                 //user coordinate values
+    a = arr;
 
     vec1 = (vectorr*)calloc(quantity_v, sizeof(double));
     rez_user = (vectorr*)calloc(quantity_v / 2, sizeof(double));
     rez_pr = (vectorr*)calloc(quantity_v, sizeof(double));
-    a = (double*)calloc(6, sizeof(double));
-
-    a[0] = 12; a[1] = -2; a[2] = -5; a[3] = -13; a[4] = 8; a[5] = 2; //user coordinate values
 
     vec1[i] = create(vec1, i, i + 1);
     vec1[i + 1] = create(vec1, i + 1, i + 2);
-    rez_pr[i] = vector_pr_c(vec1, rez_pr, i);                      //vector.c
+    rez_pr[i] = vector_pr_c(vec1, rez_pr, i);                            //vector.c
 
-    user(rez_user, a, i);                                          //creating a user product - result vector
+    user(rez_user, a, i);                                                //creating a user product - result vector
 
     Error result = OK;
     if (comparison(rez_user, rez_pr, i) == 0)
@@ -258,7 +251,6 @@ Error vector_pr_test_complex() {                                    //vector pro
     free(vec1);
     free(rez_pr);
     free(rez_user);
-    free(a);
     return result;
 }
 
@@ -271,13 +263,13 @@ Error vector_pr_test_real() {
     double* a;
     vector2* rez_pr;
     int i = 0;
+    double arr[3] = { -2,3,-1 };                               
+    a = arr;
+    
 
     vec1 = (vector2*)calloc(quantity_v, sizeof(double));
     rez_user = (vector2*)calloc(quantity_v / 2, sizeof(double));
     rez_pr = (vector2*)calloc(quantity_v, sizeof(double));
-    a = (double*)calloc(3, sizeof(double));
-
-    a[0] = -2; a[1] = 3; a[2] = -1;
 
     vec1[i] = create_real(vec1, i, i + 1);
     vec1[i + 1] = create_real(vec1, i + 1, i + 2);
@@ -292,7 +284,6 @@ Error vector_pr_test_real() {
     free(vec1);
     free(rez_pr);
     free(rez_user);
-    free(a);
     return result;
 }
 
