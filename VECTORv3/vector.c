@@ -2,110 +2,89 @@
 #include <stdlib.h>
 #include "vector.h"
 
-vectorr create(vectorr* vec1, int m, int countt) {
+void create(vector* vec1, int m, int count) {
+    
+    if (vec1->com == 1) {
+        vec1->v1[m].x = m * count + 0.5;
+        vec1->v1[m].y = m * count + 1;
+        vec1->v1[m].z = m * count + 2;
 
-    vectorr* temporarily = vec1 + m;
-    (temporarily)->x = m * countt + 0.5;
-    (temporarily)->y = m * countt + 1;
-    (temporarily)->z = m * countt + 2;
+        vec1->v1[m].xi = m * count + 1;
+        vec1->v1[m].yi = m * count * 2;
+        vec1->v1[m].zi = m * count + 3.5;
+    }
 
-    (temporarily)->xi = m * countt + 1;
-    (temporarily)->yi = m * countt * 2;
-    (temporarily)->zi = m * countt + 3.5;
+    else {
+        vec1->v2[m].x = m * count + 0.5;
+        vec1->v2[m].y = m * count + 1;
+        vec1->v2[m].z = m * count + 2;
+    }
+ }
 
-    return *temporarily;
+void sum(vector* vec1, vector* vecc, int m, int n) {
 
-}
+    if (vec1->com == 1) {
+        (vecc)->v1[n].x = vec1->v1[m].x + vec1->v1[1 + m].x;
+        (vecc)->v1[n].y = vec1->v1[m].y + vec1->v1[1 + m].y;
+        (vecc)->v1[n].z = vec1->v1[m].z + vec1->v1[1 + m].z;
 
+        (vecc)->v1[n].xi = vec1->v1[m].xi + vec1->v1[1 + m].xi;
+        (vecc)->v1[n].yi = vec1->v1[m].yi + vec1->v1[1 + m].yi;
+        (vecc)->v1[n].zi = vec1->v1[m].zi + vec1->v1[1 + m].zi; }
 
-vector2 create_real(vector2* vec1, int m, int countt) {
-
-    vector2* temporarily = vec1 + m;
-    (temporarily)->x = m * countt + 0.5;
-    (temporarily)->y = m * countt + 1;
-    (temporarily)->z = m * countt + 2;
-
-    return *temporarily;
-
-}
-
-
-void sum_c(vectorr* vec1, vectorr* vecc, int i) {
-
-    (vecc + i / 2)->x = (vec1 + i)->x + (vec1 + i + 1)->x;
-    (vecc + i / 2)->y = (vec1 + i)->y + (vec1 + i + 1)->y;
-    (vecc + i / 2)->z = (vec1 + i)->z + (vec1 + i + 1)->z;
-    (vecc + i / 2)->xi = (vec1 + i)->xi + (vec1 + i + 1)->xi;
-    (vecc + i / 2)->yi = (vec1 + i)->yi + (vec1 + i + 1)->yi;
-    (vecc + i / 2)->zi = (vec1 + i)->zi + (vec1 + i + 1)->zi;
+    else {
+        (vecc)->v2[n].x = vec1->v2[m].x + vec1->v2[1 + m].x;
+        (vecc)->v2[n].y = vec1->v2[m].y + vec1->v2[1 + m].y;
+        (vecc)->v2[n].z = vec1->v2[m].z + vec1->v2[1 + m].z; }
 
 }
 
 
 
-vector2 sum_real(vector2* vec1, vector2* vec_sum, int i) {
+void scalar_pr(vector* vec1, rez* rez2, int m, int n) {
 
-    vector2* vecc = vec_sum + i / 2;
-    (vecc)->x = (vec1 + i)->x + (vec1 + i + 1)->x;
-    (vecc)->y = (vec1 + i)->y + (vec1 + i + 1)->y;
-    (vecc)->z = (vec1 + i)->z + (vec1 + i + 1)->z;
+    if (vec1->com == 1) {
 
-    return *vecc;
+        (rez2+n)->rez_scal = vec1->v1[m].x * vec1->v1[1 + m].x + vec1->v1[m].y * vec1->v1[1 + m].y +
+            vec1->v1[m].z * vec1->v1[1 + m].z - vec1->v1[m].xi * vec1->v1[1 + m].xi -
+            vec1->v1[m].yi * vec1->v1[1 + m].yi - vec1->v1[m].zi * vec1->v1[1 + m].zi;
+
+        (rez2+n)->rez_scalcomplex = vec1->v1[m].x * vec1->v1[1 + m].xi + vec1->v1[m].xi * vec1->v1[1 + m].x +
+            vec1->v1[m].y * vec1->v1[1 + m].yi + vec1->v1[m].yi * vec1->v1[1 + m].y +
+            vec1->v1[m].z * vec1->v1[1 + m].zi + vec1->v1[m].zi * vec1->v1[1 + m].z; }
+
+    else {
+        (rez2+n)->rez_scal = vec1->v2[m].x * vec1->v1[1 + m].x + vec1->v2[m].y *
+            vec1->v2[1 + m].y + vec1->v2[m].z * vec1->v2[1 + m].z; }
 }
 
 
+void vector_pr(vector* vec1, vector* vec3, int m) {
 
 
+    if (vec1->com == 1) {
 
+        vec3->v1[m].x = vec1->v1[m].y * vec1->v1[1 + m].z - vec1->v1[m].z * vec1->v1[1 + m].y -
+            vec1->v1[m].yi * vec1->v1[1 + m].zi + vec1->v1[m].zi * vec1->v1[1 + m].yi;
 
+        vec3->v1[m].xi = vec1->v1[m].y * vec1->v1[1 + m].zi + vec1->v1[m].yi * vec1->v1[1 + m].z -
+            vec1->v1[m].z * vec1->v1[1 + m].yi - vec1->v1[m].zi * vec1->v1[1 + m].y;
 
-rez scalar_pr_c(vectorr* vec1, rez* rez2, int i) {
+        vec3->v1[m].y = vec1->v1[m].z * vec1->v1[1 + m].x - vec1->v1[m].x * vec1->v1[1 + m].z -
+            vec1->v1[m].zi * vec1->v1[1 + m].xi + vec1->v1[m].xi * vec1->v1[1 + m].zi;
 
-    rez* rez1 = rez2 + i;
-    (rez1)->rez_scal = (vec1 + i)->x * (vec1 + i + 1)->x + (vec1 + i)->y * (vec1 + i + 1)->y +
-        (vec1 + i)->z * (vec1 + i + 1)->z - (vec1 + i)->xi * (vec1 + i + 1)->xi -
-        (vec1 + i)->yi * (vec1 + i + 1)->yi - (vec1 + i)->zi * (vec1 + i + 1)->zi;
-    (rez1)->rez_scalcomplex = (vec1 + i)->x * (vec1 + i + 1)->xi + (vec1 + i)->xi * (vec1 + i + 1)->x +
-        (vec1 + i)->y * (vec1 + i + 1)->yi + (vec1 + i)->yi * (vec1 + i + 1)->y +
-        (vec1 + i)->z * (vec1 + i + 1)->zi + (vec1 + i)->zi * (vec1 + i + 1)->z;
+        vec3->v1[m].yi = vec1->v1[m].z * vec1->v1[1 + m].xi + vec1->v1[m].zi * vec1->v1[1 + m].x -
+            vec1->v1[m].x * vec1->v1[1 + m].zi - vec1->v1[m].xi * vec1->v1[1 + m].z;
 
-    return *rez1;
-}
+        vec3->v1[m].z = vec1->v1[m].x * vec1->v1[1 + m].y - vec1->v1[m].y * vec1->v1[1 + m].x -
+            vec1->v1[m].xi * vec1->v1[1 + m].yi + vec1->v1[m].yi * vec1->v1[1 + m].xi;
 
-double scalar_pr_real(vector2* vec1, double* rezz, int i) {
+        vec3->v1[m].zi = vec1->v1[m].x * vec1->v1[1 + m].yi + vec1->v1[m].xi * vec1->v1[1 + m].y -
+            vec1->v1[m].y * vec1->v1[1 + m].xi - vec1->v1[m].yi * vec1->v1[1 + m].x;       }
 
-    double* rez1 = rezz + i / 2;
-    *(rez1 + i / 2) = (vec1 + i)->x * (vec1 + i + 1)->x + (vec1 + i)->y *
-        (vec1 + i + 1)->y + (vec1 + i)->z * (vec1 + i + 1)->z;
+    else {
+        vec3->v2[m].x = vec1->v2[m].y * vec1->v2[1 + m].z - vec1->v2[m].z * vec1->v2[1 + m].y;
+        vec3->v2[m].y = vec1->v2[m].z * vec1->v2[1 + m].x - vec1->v2[m].x * vec1->v2[1 + m].z;
+        vec3->v2[m].z = vec1->v2[m].x * vec1->v2[1 + m].y - vec1->v2[m].y * vec1->v2[1 + m].x;   }
 
-    return *(rez1 + i / 2);
-}
-
-vectorr vector_pr_c(vectorr* vec1, vectorr* vec_pr, int i) {
-
-    vectorr* vec3 = vec_pr + i / 2;
-    vec3->x = (vec1 + i)->y * (vec1 + i + 1)->z - (vec1 + i)->z * (vec1 + i + 1)->y -
-        (vec1 + i)->yi * (vec1 + i + 1)->zi + (vec1 + i)->zi * (vec1 + i + 1)->yi;
-    vec3->xi = (vec1 + i)->y * (vec1 + i + 1)->zi + (vec1 + i)->yi * (vec1 + i + 1)->z -
-        (vec1 + i)->z * (vec1 + i + 1)->yi - (vec1 + i)->zi * (vec1 + i + 1)->y;
-    vec3->y = (vec1 + i)->z * (vec1 + i + 1)->x - (vec1 + i)->x * (vec1 + i + 1)->z -
-        (vec1 + i)->zi * (vec1 + i + 1)->xi + (vec1 + i)->xi * (vec1 + i + 1)->zi;
-    vec3->yi = (vec1 + i)->z * (vec1 + i + 1)->xi + (vec1 + i)->zi * (vec1 + i + 1)->x -
-        (vec1 + i)->x * (vec1 + i + 1)->zi - (vec1 + i)->xi * (vec1 + i + 1)->z;
-    vec3->z = (vec1 + i)->x * (vec1 + i + 1)->y - (vec1 + i)->y * (vec1 + i + 1)->x -
-        (vec1 + i)->xi * (vec1 + i + 1)->yi + (vec1 + i)->yi * (vec1 + i + 1)->xi;
-    vec3->zi = (vec1 + i)->x * (vec1 + i + 1)->yi + (vec1 + i)->xi * (vec1 + i + 1)->y -
-        (vec1 + i)->y * (vec1 + i + 1)->xi - (vec1 + i)->yi * (vec1 + i + 1)->x;
-
-    return *vec3;
-}
-
-vector2 vector_pr_real(vector2* vec1, vector2* vec_pr, int i) {
-
-    vector2* vec3 = vec_pr + i / 2;
-    vec3->x = (vec1 + i)->y * (vec1 + i + 1)->z - (vec1 + i)->z * (vec1 + i + 1)->y;
-    vec3->y = (vec1 + i)->z * (vec1 + i + 1)->x - (vec1 + i)->x * (vec1 + i + 1)->z;
-    vec3->z = (vec1 + i)->x * (vec1 + i + 1)->y - (vec1 + i)->y * (vec1 + i + 1)->x;
-
-    return *vec3;
 }

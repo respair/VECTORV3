@@ -10,20 +10,28 @@ typedef struct {     //real vector
     double x, y, z;
 } vector2;
 
+typedef struct {     // real + complex
+    int com;
+
+    void (*sum)();
+    void (*create)();
+    void (*vector_pr)();
+    void (*scalar_pr)();
+    
+    vectorr v1[2];
+    vector2 v2[2];
+} vector;
+
 typedef struct rez {
+
     double rez_scal, rez_scalcomplex;
 } rez;
 
 
 
-vectorr create(vectorr* vec1, int m, int countt);
-vector2 create_real(vector2* vec1, int m, int countt);
-
-void sum_c(vectorr* vec1, vectorr* vecc, int i);
-vector2 sum_real(vector2* vec1, vector2* vec_sum, int i);
-rez scalar_pr_c(vectorr* vec1, rez* rez2, int i);
-double scalar_pr_real(vector2* vec1, double* rezz, int i);
-vectorr vector_pr_c(vectorr* vec1, vectorr* vec_pr, int i);
-vector2 vector_pr_real(vector2* vec1, vector2* vec_pr, int i);
+void create(vector* vec1, int m, int count);
+void sum(vector* vec1, vector* vecc, int m, int n);
+void scalar_pr(vector* vec1, rez* rez2, int m, int n);
+void vector_pr(vector* vec1, vector* vec3, int m);
 
 #endif
